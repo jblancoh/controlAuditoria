@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+
+<form method="post" class="form-horizontal">
+  {% csrf_token %}
+  <div class="row">
+   	 <div class="col-md-6 col-md-offset-3">
+ 		 <div class="form-group">
+    <label for="username"><b>Nombre de Usuario:</b></label>
+    <input class="form-control" type="text" name="username">
+		</div>
+			</div>
+				</div>
+		<div class="row">
+ 			<div class="col-md-6 col-md-offset-3">
+ 				<div class="form-group">
+    <label for="username"><b>Password</b></label>
+    <input class="form-control" type="password" name="password" >
+	</div>
+		</div>
+			</div>
+	<div class="row">
+ 		<div class="col-md-6 col-md-offset-3">
+ 			<div class="form-group">
+    <input class="btn btn-primary" type="submit" value="Ingresar">
+  
+    <a href="{% url 'password_reset' %}">Olvide mi contraseña</a>
+    {% if form.errors %}
+    <p class="error">Usuario o contraseña incorrectos</p>
+  {% endif %}
+</div>
+		</div>
+			</div>
+ 
+</form>
+
+{% endblock%}

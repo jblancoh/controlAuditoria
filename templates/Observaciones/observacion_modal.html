@@ -1,0 +1,31 @@
+
+{% block content %}
+ <div class="modal-dialog">
+ <div class="modal-content">
+ <div class="modal-header">
+       
+ <CENTER><h3 class="modal-title">Detalles de observaciones</h3></CENTER> 
+ <div class="modal-body">
+<form method="post">
+	{% csrf_token %}
+
+	{{ form.as_p }}
+</form>
+</div>
+</div>
+</div>
+
+<!-- <label> Fecha de inicio</label<input type="date"  class="form-control" name="FechaInicio"  value="<< form.Observaciones.FechaInicio >>">-->
+
+<input type="hidden" name="Usuario" value="{{ user.username }}" >
+
+
+<!-- <input  name="{{ form.Observaciones.Usuario }}" value="{{ user.username }}" disabled>
+	 -->
+	<!-- <label for="Usuario"> Usuario:  <input id="Usuario" type="text" value="{{ user.username }}" disabled /> </label><p>
+	-->
+	
+
+</form>
+
+{% endblock %} 

@@ -1,0 +1,199 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+<link rel="stylesheet" type="text/css" href="{% static 'DataTables/media/css/jquery.dataTables.min.css' %}"> 
+<link rel="stylesheet" type="text/css" href="{% static 'DataTables/media/css/buttons.dataTables.min.css' %}"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link  rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css">
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+<script src="{% static 'DataTables/media/js/jquery.js' %}"></script>
+<script src="{% static 'DataTables/media/js/jquery.dataTables.min.js' %}" ></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.1.0/js/responsive.bootstrap.min.js"></script>
+
+<script src="http://malsup.github.com/jquery.form.js"></script> 
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'js/bootstrap-confirmation.js' %}"></script>
+
+<meta charset="UTF-8">
+
+
+<script >
+	$(document).ready(function() {
+
+    $('#DataTable').DataTable( {
+    	    
+    	    "language": {
+            "lengthMenu": "Mostrar _MENU_ por pagina   ",
+            "zeroRecords": "Sin registros ",
+            "info": " Pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "Ningún registro",
+            "infoFiltered": "(_TOTAL_ de _MAX_ Registros )",
+            "search": "Buscar:",
+            "paginate": {
+            "first":      "Primer",
+            "previous":   "Anterior",
+            "next":       "Siguiente",
+            "last":       "Ultimo",
+
+        },
+        },
+
+		    dom: 'lBfrtip',
+        buttons: [
+            'copy', 'excel', 'pdf', 'print'
+        ],
+        responsive: true,
+             
+    } );
+
+    } );
+</script>
+
+
+	{% block extrahead %}
+	
+
+	{% endblock %}
+
+
+	
+
+	{% block header %}
+	<div class="container">
+   
+	<header>
+		<img src="{% static 'images/seseplogo2.png' %} " width="410" class="img-responsive">
+
+   <DIV ALIGN=right> <h4> Binvenido <STRONG>{{user.username}}</STRONG></h4> </DIV>
+	</header>
+
+
+	{% endblock %}
+
+	{% block navbar %}
+
+	 <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'indexObservacion:indexObservacionCompletas' %}"><span class="glyphicon glyphicon-home"></span> Observaciones de auditoría</a>
+                           
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+               <li class="dropdown">
+                <a href="{% url 'indexAuditoria:indexAuditoria' %}" ><span class="glyphicon glyphicon-time"></span> Auditorías </a>
+               </li>
+            </ul>
+
+              <ul class="nav navbar-nav">
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-bullhorn"></span> Observaciones </a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url 'indexObservacion:indexObservacion' %}">Observaciones en proceso <span class="glyphicon glyphicon-ok"></span></a></li>
+                  <li><a href="{% url 'indexObservacion:indexObservacionFinalizadas' %}">Observaciones finalizadas <span class="glyphicon glyphicon-remove"></span> </a></li>
+                  </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav">
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Seguimientos </a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url 'indexSeguimientos:indexSeguimientos' %}">Seguimientos en proceso <span class="glyphicon glyphicon-ok"></span></a></li>
+                  <li><a href="#">Seguimientos finalizados <span class="glyphicon glyphicon-remove"></span> </a></li>
+                  </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav">
+               <li class="dropdown">
+               {% if user.is_superuser %}
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class=" glyphicon glyphicon-book"></span> Catalogos </a>
+               
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'indexTipoAuditoria:indexTipoAuditoria' %}">Tipo de auditoría </a></li>
+                   <!-- <li><a href="{% url 'indexAuditoria:indexAuditoria' %}">Auditoría </a></li>-->
+                <!--    <li><a href="{% url 'indexSeguimientos:indexSeguimientos' %}">Tipo de seguimiento </a></li>  -->
+                    <li><a href="#">Estatus </a></li>
+                    <li><a href="#">Usuarios </a></li>
+                  </ul>
+                  </ul>
+                  {% else %}
+
+              {% endif %}
+              </li>
+            </ul>
+            
+            <ul class="nav navbar-nav navbar-right">
+              <!--<li class="active"><a href="#"><span class=" glyphicon glyphicon-inbox"></span> Contacto <span class="sr-only">(current)</span></a></li> -->
+              <li><a href="http://10.30.10.21:8000/admin/password_change/"><span class=" glyphicon glyphicon-cog"></span> Notificaciones</a></li>
+              <li><a href="/logout/"><span class=" glyphicon glyphicon-off"></span> Cerrar sesión
+              </a></li>
+            </ul>
+         
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+{% endblock %}
+
+{% block content %}
+	<h5>Contenido base</h5>
+	{% endblock %}
+
+	{% block footer %}
+
+<br>
+<div class="alert alert-dismissible alert-danger">
+
+          <p><!--<a href="http://www.html5mania.com/blog/">Blog</a> | <a href="http://www.html5mania.com/disclaimer/">Disclaimer</a>  | <a href="http://feeds.feedburner.com/html5mania">Subscribe RSS</a>  | <a href="http://twitter.com/html5mania">Follow us on Twitter</a>-->Secretariado Ejecutivo del Sistema Estatal de Seguridad P&uacute;blica / Direcci&oacute;n del Sistema Estatal de Informaci&oacute;n &copy;</p>
+    <!--<p>Secretariado Ejecutivo del Sistema Estatal de Seguridad P&uacute;blica / Direcci&oacute;n del Sistema Estatal de Informaci&oacute;n &copy;</p>-->
+    </div>
+
+<!-- 
+
+{% if user.is_superuser %}
+Usted es el admin
+{% else %}
+Usted es usuario común
+{% endif %}
+
+{% if user.is_authenticated %}
+<p>Welcome, {{ request.user.get_username }}. <br/>
+{% else %}
+<p>Welcome, new user. Please log in.</p>
+{% endif %}
+
+{{ user.groups.all.0 }}
+
+{% if request.user.groups.all.0.name == 'Prueba' %}
+Este de grupo es de prueba
+{% elif  request.user.groups.all.0.name == 'Usuario Común' %}
+Grupo Comun
+{% else %}
+No es de prueba
+{% endif %}
+
+
+-->
+{% endblock %}
+
+</div>
+	
+	{% block extrajs %}
+	{% endblock %}
+
+</html>

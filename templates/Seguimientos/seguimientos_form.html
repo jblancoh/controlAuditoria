@@ -1,0 +1,25 @@
+
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<form method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+
+
+<!-- <label> Fecha de inicio</label<input type="date"  class="form-control" name="FechaInicio"  value="<< form.Observaciones.FechaInicio >>">-->
+{% if Seguimientos.Usuario == None %}
+<input type="hidden" name="Usuario" value="{{ user.username }}" >
+{% else %}
+{% endif %}
+
+<!-- <input  name="{{ form.Observaciones.Usuario }}" value="{{ user.username }}" disabled>
+	 -->
+	<!-- <label for="Usuario"> Usuario:  <input id="Usuario" type="text" value="{{ user.username }}" disabled /> </label><p>
+	-->
+	<button type="submit" class="btn btn-primary"">Guardar</button>
+
+</form>
+
+{% endblock %} 
